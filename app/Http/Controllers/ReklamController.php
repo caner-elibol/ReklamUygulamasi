@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Reklam;
 use Illuminate\Http\Request;
 use Auth;
 
@@ -16,7 +17,26 @@ class ReklamController extends Controller
     {
         $user = Auth::user();
         $id=$user->id;
-        return $id;
+        $bakiye=$user->bakiye;
+        $reklamlar=Reklam::where('user_id','=',$id)->get();
+        foreach ($reklamlar as $reklam){
+            if($reklam->maliyet<=$bakiye)
+            {
+                if($reklam->gunluk_limit>=1){
+                    Reklam::where('id',$reklam->id)->update(array('durum'=>'aktif'));
+                }
+                else{
+                    Reklam::where('id',$reklam->id)->update(array('durum'=>'pasif'));
+                }
+
+            }
+            else{
+                Reklam::where('id',$reklam->id)->update(array('durum'=>'pasif'));
+            }
+        }
+        $reklamlar=Reklam::where('user_id','=',$id)->get();
+
+        return view('benim.list',compact('reklamlar','bakiye'));
     }
 
     /**
