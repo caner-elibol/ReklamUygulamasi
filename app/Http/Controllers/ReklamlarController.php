@@ -79,7 +79,14 @@ class ReklamlarController extends Controller
      */
     public function show($id)
     {
-        return $id." "."numaralı reklam";
+        $user_id=Reklam::where('id', $id)->first()->user_id;
+        $maliyet=Reklam::where('id', $id)->first()->maliyet;
+        $sahipbakiye = User::where('id', $user_id)->first()->bakiye;
+        $ben = Auth::user();
+        $kullanici=$ben->id;
+        $bakiyem=$ben->bakiye;
+        echo "Benim bakiyem"." = ".$bakiyem." - "."Reklam Sahibi Bakiyesi"." = ".$sahipbakiye;
+
     }
 
     /**

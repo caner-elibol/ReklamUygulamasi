@@ -33,7 +33,7 @@
                     <td style="text-color: white" class="bg-{{ $reklam->durum === "aktif"?'success':'danger' }}">{{$reklam->durum}}</td>
                     <td>{{$reklam->maliyet}} ₺</td>
                     <td>{{$reklam->gunluk_limit}}</td>
-                    <td><a href="{{route('hepsi.edit',$reklam->id)}}" target="_blank">{{$reklam->siteurl}}</a></td>
+                    <td><a href="{{route('hepsi.update',$reklam->id)}}" target="_blank">{{$reklam->siteurl}}</a></td>
                   </tr>
                   @php
                       $no++;
