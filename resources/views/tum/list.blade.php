@@ -11,7 +11,6 @@
                 <thead>
                   <tr>
                     <th scope="col">No</th>
-                    <th scope="col">ID</th>
                     <th scope="col">Başlık</th>
                     <th scope="col">Açıklama</th>
                     <th scope="col">Durum</th>
@@ -27,7 +26,6 @@
                     @foreach ($reklamlar as $reklam)
                   <tr>
                     <th scope="row">{{$no}}</th>
-                    <th scope="row">{{$reklam->id}}</th>
                     <td>{{$reklam->baslik}}</td>
                     <td>{{$reklam->aciklama}}</td>
                     <td style="text-color: white" class="bg-{{ $reklam->durum === "aktif"?'success':'danger' }}">{{$reklam->durum}}</td>

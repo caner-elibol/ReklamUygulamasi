@@ -35,7 +35,7 @@ class ReklamController extends Controller
                 Reklam::where('id',$reklam->id)->update(array('durum'=>'pasif'));
             }
         }
-        $reklamlar=Reklam::where('user_id','=',$id)->get();
+        $reklamlar=Reklam::where('user_id','=',$id)->orderBy('maliyet', 'desc')->orderBy('created_at', 'asc')->get();
 
         return view('benim.list',compact('reklamlar','bakiye'));
     }

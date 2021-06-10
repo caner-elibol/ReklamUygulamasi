@@ -42,7 +42,7 @@ class ReklamlarController extends Controller
             }
         }
 
-        $reklamlar=Reklam::where('durum','=','aktif')->get();
+        $reklamlar=Reklam::where('durum','=','aktif')->orderBy('maliyet', 'desc')->orderBy('created_at', 'asc')->get();
         $ben = Auth::user();
         $idm=$ben->id;
         $bakiyem=$ben->bakiye;
