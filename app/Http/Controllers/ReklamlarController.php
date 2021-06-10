@@ -79,15 +79,26 @@ class ReklamlarController extends Controller
      */
     public function show($id)
     {
-        $user_id=Reklam::where('id', $id)->first()->user_id;
-        $maliyet=Reklam::where('id', $id)->first()->maliyet;
-        $sahipbakiye = User::where('id', $user_id)->first()->bakiye;
         $ben = Auth::user();
-        $kullanici=$ben->id;
+        $idm=$ben->id;
         $bakiyem=$ben->bakiye;
-        echo "Benim bakiyem"." = ".$bakiyem." - "."Reklam Sahibi Bakiyesi"." = ".$sahipbakiye;
+        $reklam=Reklam::find($id);
+
+        if($reklam->user_id == $idm){
+            return redirect()->route('hepsi.index')->withErrors('Kendi reklamına tıklayamazsın.');
+        }
+        else{
+
+            if($reklam->durum=='aktif'){
+
+                return view('tum.reklam',compact('reklam','bakiyem'));
+                }
+            else{
+                return redirect()->route('hepsi.index')->withErrors('Reklam yayından kaldırıldığı için görüntülenemiyor.');
+            }
 
     }
+}
 
     /**
      * Show the form for editing the specified resource.
@@ -97,7 +108,33 @@ class ReklamlarController extends Controller
      */
     public function edit($id)
     {
+        $ben = Auth::user();
+        $idm=$ben->id;
+        $bakiyem=$ben->bakiye;
+        $reklam=Reklam::find($id);
 
+        if($reklam->user_id == $idm){
+            return redirect()->route('hepsi.index')->withErrors('Kendi reklamından kazanç sağlayamazsın.');
+        }
+        else{
+            $reklamsahibi=User::find($reklam->user_id);
+            $bakiyesi=$reklamsahibi->bakiye;
+            $sonbakiye=$bakiyesi-$reklam->maliyet;
+            $sonbakiyem=$bakiyem+$reklam->maliyet;
+            $gunluklimit=$reklam->gunluk_limit;
+            $gunluklimit=$gunluklimit-1;
+
+            if($sonbakiye>=0 && $gunluklimit>-1){
+                $reklam->update(array('gunluk_limit' => $gunluklimit));
+                $reklamsahibi->update(array('bakiye' => $sonbakiye));
+                $ben->update(array('bakiye' => $sonbakiyem));
+
+                return redirect()->route('hepsi.index')->withSuccess('Reklamdan ödeme alındı.');
+                }
+            else{
+                return redirect()->route('hepsi.index')->withErrors('Reklam yayından kaldırıldığı için ödeme alamazsınız.');
+            }
+        }
     }
 
     /**
