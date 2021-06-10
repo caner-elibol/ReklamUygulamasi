@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ReklamCreateRequest;
 use App\Models\Reklam;
 use Illuminate\Http\Request;
 use Auth;
@@ -46,7 +47,7 @@ class ReklamController extends Controller
      */
     public function create()
     {
-        //
+        return view('benim.create');
     }
 
     /**
@@ -55,9 +56,34 @@ class ReklamController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ReklamCreateRequest $request)
     {
-        //
+        $user = Auth::user();
+        $id=$user->id;
+        $bakiye=$user->bakiye;
+
+        $reklam=new Reklam;
+        $reklam->baslik=$request->baslik;
+        $reklam->aciklama=$request->aciklama;
+        $reklam->siteurl=$request->siteurl;
+        $reklam->maliyet=$request->maliyet;
+        $reklam->gunluk_limit=$request->gunluk_limit;
+        $reklam->user_id=$id;
+        if($request->maliyet<=$bakiye){
+            if($request->gunluk_limit>0){
+                $reklam->durum='aktif';
+            }
+            else{
+                $reklam->durum='pasif';
+            }
+        }
+        else{
+            $reklam->durum='pasif';
+        }
+
+        $reklam->save();
+        return redirect()->route('benim.index')->withSuccess('Reklam Kaydı Başarı ile Oluşturuldu.');
+
     }
 
     /**

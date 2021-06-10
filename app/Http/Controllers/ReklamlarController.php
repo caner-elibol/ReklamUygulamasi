@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Reklam;
+use App\Models\User;
 use Auth;
 
 use Illuminate\Http\Request;
@@ -15,11 +16,11 @@ class ReklamlarController extends Controller
      */
     public function index()
     {
-        $user = Auth::user();
-        $id=$user->id;
-        $bakiye=$user->bakiye;
-        $reklamim=Reklam::where('user_id','=',$id)->get();
-        foreach ($reklamim as $reklam){
+
+
+        $reklamlar=Reklam::get();
+        foreach ($reklamlar as $reklam){
+            $bakiye = User::where('id', $reklam->user_id)->first()->bakiye;
             if($reklam->maliyet<=$bakiye)
             {
                 if($reklam->gunluk_limit>=1){
@@ -40,8 +41,13 @@ class ReklamlarController extends Controller
                 }
             }
         }
+
         $reklamlar=Reklam::where('durum','=','aktif')->get();
-        return view('tum.list',compact('reklamlar','bakiye'));
+        $ben = Auth::user();
+        $idm=$ben->id;
+        $bakiyem=$ben->bakiye;
+
+        return view('tum.list',compact('reklamlar','bakiyem'));
     }
 
     /**
@@ -73,7 +79,7 @@ class ReklamlarController extends Controller
      */
     public function show($id)
     {
-        //
+        return $id." "."numaralı reklam";
     }
 
     /**
@@ -84,7 +90,7 @@ class ReklamlarController extends Controller
      */
     public function edit($id)
     {
-        //
+
     }
 
     /**
@@ -96,7 +102,7 @@ class ReklamlarController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
     }
 
     /**

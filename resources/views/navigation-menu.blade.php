@@ -91,6 +91,17 @@
                         </x-slot>
 
                         <x-slot name="content">
+                            <div class="block px-4 py-2 text-xs text-gray-400">
+                                Reklamlar
+                            </div>
+
+                            <x-jet-dropdown-link href="{{ route('benim.index') }}">
+                                Reklamlarım
+                            </x-jet-dropdown-link>
+
+                            <x-jet-dropdown-link href="{{ route('hepsi.index') }}">
+                                Tüm Aktif Reklamlar
+                            </x-jet-dropdown-link>
                             <!-- Account Management -->
                             <div class="block px-4 py-2 text-xs text-gray-400">
                                 {{ __('Manage Account') }}

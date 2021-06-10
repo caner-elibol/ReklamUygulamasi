@@ -6,6 +6,7 @@
     <div class="card">
         <div class="card-body">
             <h5 class="card-title"><a href="{{route('benim.create')}}" class="btn btn-sm btn-primary"> Bakiyem : {{$bakiye}} ₺ </a></h5>
+            <h5 class="card-title"><a href="{{route('benim.create')}}" class="btn btn-sm btn-success"> Yeni Reklam Oluştur </a></h5>
             <table class="table table-bordered">
                 <thead>
                   <tr>
