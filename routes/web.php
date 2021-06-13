@@ -29,7 +29,7 @@ Route::group([
     'middleware'=>['auth'],
     'prefix'=>'reklamlar'
 ],function(){
-    //Route::get('tasks/{id}',[TaskController::class,'destroy'])->whereNumber('id')->name('tasks.destroy');
+    Route::get('benim/{id}',[ReklamController::class,'destroy'])->whereNumber('id')->name('benim.destroy');
     Route::resource('benim', ReklamController::class);
     Route::resource('hepsi', ReklamlarController::class);
 });

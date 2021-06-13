@@ -5,7 +5,7 @@
 
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title"><a href="{{route('benim.create')}}" class="btn btn-sm btn-primary"> Bakiyem : {{$bakiye}} ₺ </a></h5>
+            <h5>Bakiyeniz: <span class="badge bg-primary"> {{$bakiye}} ₺ </span></h5>
             <h5 class="card-title"><a href="{{route('benim.create')}}" class="btn btn-sm btn-success"> Yeni Reklam Oluştur </a></h5>
             <table class="table table-bordered">
                 <thead>
@@ -34,8 +34,7 @@
                     <td>{{$reklam->gunluk_limit}}</td>
                     <td>{{$reklam->siteurl}}</td>
                     <td>
-                        <a href="" class="btn btn-sm btn-success"> Reklama Başla </a>
-                        <a href="{{route('benim.destroy',$reklam->id)}}" class="btn btn-sm btn-danger">Reklamı Sil</a>
+                        <a href="{{route('benim.destroy',$reklam->id)}}" class="btn btn-sm btn-danger">Reklamı Kaldır</a>
                     </td>
                   </tr>
                   @php

@@ -128,6 +128,19 @@ class ReklamController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $ben = Auth::user();
+        $idm=$ben->id;
+
+        $reklam=Reklam::find($id) ?? abort(404,'Task Not Found');
+
+
+        if($reklam->user_id==$idm){
+            $reklam->delete();
+            return redirect()->route('benim.index')->withSuccess('Reklam Kaldırma İşlemi Başarılı.');
+        }
+        else{
+            return redirect()->route('benim.index')->withErrors('Reklam Bulunamadı.');
+        }
+
     }
 }

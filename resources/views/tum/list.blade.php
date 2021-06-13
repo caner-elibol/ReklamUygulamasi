@@ -5,7 +5,7 @@
 
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title"><a href="{{route('benim.create')}}" class="btn btn-sm btn-primary"> Bakiyem : {{$bakiyem}} ₺ </a></h5>
+            <h5>Bakiyeniz: <span class="badge bg-primary"> {{$bakiyem}} ₺ </span></h5>
             <h5 class="card-title"><a href="{{route('benim.create')}}" class="btn btn-sm btn-success"> Yeni Reklam Oluştur </a></h5>
             <table class="table table-bordered">
                 <thead>

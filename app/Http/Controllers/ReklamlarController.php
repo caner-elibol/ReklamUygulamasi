@@ -82,7 +82,10 @@ class ReklamlarController extends Controller
         $ben = Auth::user();
         $idm=$ben->id;
         $bakiyem=$ben->bakiye;
-        $reklam=Reklam::find($id);
+        if(!$reklam=Reklam::find($id)){
+            return redirect()->route('hepsi.index')->withErrors('Reklam bulunamadı.');
+        }
+        else{
 
         if($reklam->user_id == $idm){
             return redirect()->route('hepsi.index')->withErrors('Kendi reklamına tıklayamazsın.');
@@ -99,6 +102,7 @@ class ReklamlarController extends Controller
 
     }
 }
+}
 
     /**
      * Show the form for editing the specified resource.
@@ -111,7 +115,10 @@ class ReklamlarController extends Controller
         $ben = Auth::user();
         $idm=$ben->id;
         $bakiyem=$ben->bakiye;
-        $reklam=Reklam::find($id);
+        if(!$reklam=Reklam::find($id)){
+            return redirect()->route('hepsi.index')->withErrors('Reklam bulunamadı.');
+        }
+        else{
 
         if($reklam->user_id == $idm){
             return redirect()->route('hepsi.index')->withErrors('Kendi reklamından kazanç sağlayamazsın.');
@@ -135,6 +142,7 @@ class ReklamlarController extends Controller
                 return redirect()->route('hepsi.index')->withErrors('Reklam yayından kaldırıldığı için ödeme alamazsınız.');
             }
         }
+    }
     }
 
     /**
